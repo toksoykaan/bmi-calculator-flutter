@@ -1,5 +1,8 @@
+import 'package:bmi_calculator/results_page.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'results_page.dart';
+import 'calculator_brain.dart';
 
 const activeCardColour = Color(0xFF1D1E33);
 const inactiveCardColour = Color(0xFF111328);
@@ -212,12 +215,32 @@ class _InputPageState extends State<InputPage> {
                 ],
               ),
             ),
-            Container(
-              color: bottomActiveColour,
-              margin: EdgeInsets.only(top: 10),
-              width: double.infinity, //FULL WIDTH veriyor
-              height: bottomContainerHeight,
-            )
+            GestureDetector(
+              onTap: () {
+                CalculatorBrain calc =
+                    CalculatorBrain(height: height, weight: weight);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ResultsPage(
+                              bmiResult: calc.calculateBMI(),
+                              resultText: calc.getResults(),
+                            )));
+              },
+              child: Container(
+                padding: EdgeInsets.only(bottom: 10.0),
+                child: Center(
+                  child: Text(
+                    'Calculate',
+                    textScaleFactor: 2,
+                  ),
+                ),
+                color: bottomActiveColour,
+                margin: EdgeInsets.only(top: 10),
+                width: double.infinity, //FULL WIDTH veriyor
+                height: bottomContainerHeight,
+              ),
+            ),
           ],
         ));
   }
